@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - ..:/workspace:cached
+    command: sleep infinity
+    environment:
+      - DATABASE_URL=mysql2://root:password@db:3306/microservice_development
+      - REDIS_URL=redis://redis:6379/1
+    depends_on:
+      - db
+      - redis
+    networks:
+      - microservice-network
+
+  db:
+    image: mysql:8.0.40
+    restart: unless-stopped
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=microservice_development
+    ports:
+      - "3306:3306"
+    networks:
+      - microservice-network
+    command: --default-authentication-plugin=mysql_native_password
+
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - microservice-network
+
+networks:
+  microservice-network:
+
+volumes:
+  mysql-data:
+  redis-data:

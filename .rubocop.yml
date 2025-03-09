@@ -1,0 +1,63 @@
+require: rubocop-rails
+plugins:
+- rubocop-performance
+- rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.3
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'bin/**/*'
+    - 'vendor/**/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+
+# Style configurations
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/BlockComments:
+  Enabled: false
+
+# Metrics configurations
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/AbcSize:
+  Max: 25
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+# Rails specific configurations
+Rails/FilePath:
+  EnforcedStyle: arguments
+
+# Layout configurations
+Layout/SpaceInsideArrayLiteralBrackets:
+  EnforcedStyle: no_space
+
+# RSpec configurations
+RSpec/MessageSpies:
+  EnforcedStyle: receive
+
+RSpec/StubbedMock:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Max: 10
+
+RSpec/PendingWithoutReason:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Max: 15

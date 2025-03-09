@@ -1,0 +1,168 @@
+openapi: 3.0.1
+info:
+  title: Rails API v1
+  description: |
+    API documentation for Rails 7.2 application.
+
+    ## Authentication
+    To use protected endpoints, you need to:
+    1. Use the `/auth/login` endpoint to get a token
+    2. Click the "Authorize" button at the top right
+    3. Enter your token in the format: `Bearer your_token_here`
+    4. Click "Authorize" to apply the token to all secured endpoints
+  version: '1.0'
+  # contact:
+  #   name: API Support
+  #   email: support@example.com
+
+servers:
+  - url: '{protocol}://{defaultHost}/api/v1'
+    variables:
+      protocol:
+        enum:
+          - http
+          - https
+        default: http
+      defaultHost:
+        default: localhost:3000
+
+tags:
+  - name: Health
+    description: API health status endpoints
+  - name: Authentication
+    description: User authentication
+  - name: Users
+    description: User management operations
+
+paths:
+  # Health Endpoint
+  /health:
+    get:
+      tags:
+        - Health
+      summary: Check API health status
+      description: Used for service health check
+      operationId: getHealth
+      responses:
+        '200':
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                required:
+                  - status
+
+  # Authentication Endpoints
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: User login
+      description: |
+        Authenticates a user and returns a JWT token.
+        Use the token with the Authorize button to access secured endpoints.
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: johndoe
+                password:
+                  type: string
+                  format: password
+                  example: password123
+              required:
+                - username
+                - password
+      responses:
+        '200':
+          description: Successful authentication
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MzQ1NjM5MzB9.AbC123XyZ
+                  message:
+                    type: string
+                    example: Login successful
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+                  message:
+                    type: string
+                    example: Invalid username or password
+
+  # User Endpoints
+  /users/me:
+    get:
+      tags:
+        - Users
+      summary: Get current user
+      description: |
+        Returns the currently authenticated user.
+        **Requires authentication** - Use the Authorize button with your JWT token.
+      operationId: getCurrentUser
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Current user details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                    example: johndoe
+                  name:
+                    type: string
+                    example: John Doe
+                  created_at:
+                    type: string
+                    format: date-time
+                    example: '2024-03-09T12:34:56Z'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+                  message:
+                    type: string
+                    example: Invalid or missing authentication token
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        JWT token authentication.
+        Click this "Authorize" button,
+        and enter your token in the format:
+        Bearer your_token_here

@@ -1,0 +1,53 @@
+{
+  "name": "Rails Microservice with MySql and Redis",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "features": {
+    "ghcr.io/devcontainers/features/ruby:1": {
+      "version": "3.3.0"
+    },
+    // "ghcr.io/devcontainers/features/node:1": {
+    //   "version": "lts"
+    // },
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "version": "latest"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "eamodio.gitlens",
+        "Shopify.ruby-lsp",
+        "castwide.solargraph",
+        "rebornix.ruby",
+        "kaiwood.endwise",
+        "misogi.ruby-rubocop",
+        "redhat.vscode-yaml",
+        "mechatroner.rainbow-csv",
+        "ms-azuretools.vscode-docker",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ],
+      "settings": {
+        "ruby.useBundler": true,
+        "ruby.useLanguageServer": true,
+        "ruby.lint": {
+          "rubocop": true
+        },
+        "ruby.format": "rubocop",
+        "solargraph.useBundler": true,
+        "solargraph.formatting": true,
+        "solargraph.diagnostics": true,
+        "editor.formatOnSave": true,
+        "editor.tabSize": 2
+      }
+    }
+  },
+  "forwardPorts": [3000, 3306, 6379],
+  "postCreateCommand": "bundle install && bundle exec rails db:create",
+  "remoteUser": "vscode"
+}
