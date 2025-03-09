@@ -7,7 +7,7 @@ gem "bcrypt"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 # Job queue/processor
-gem "connection_pool", "~> 2.4.1"
+gem "connection_pool", "~> 2.5.0"
 # Environment Variables
 gem "dotenv-rails"
 # Redis client for hiredis
