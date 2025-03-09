@@ -25,7 +25,7 @@ gem "rack-attack"
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 gem "rack-cors"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.2.1"
+gem "rails", "~> 8.0.1"
 # Use Redis adapter to run Action Cable in production
 gem "redis-client", "~> 0.24.0"
 # API documentation
