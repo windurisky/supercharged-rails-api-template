@@ -48,6 +48,6 @@
     }
   },
   "forwardPorts": [3000, 3306, 6379],
-  "postCreateCommand": "bundle install && bundle exec rails db:create",
+  "postCreateCommand": "cp .env.sample .env && bundle install && bundle exec rails db:setup",
   "remoteUser": "vscode"
 }
